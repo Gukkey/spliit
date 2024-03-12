@@ -46,6 +46,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { match } from 'ts-pattern'
 import { extractCategoryFromTitle } from './expense-form-actions'
+import { Textarea } from './ui/textarea'
 
 export type Props = {
   group: NonNullable<Awaited<ReturnType<typeof getGroup>>>
@@ -91,6 +92,7 @@ export function ExpenseForm({
           splitMode: expense.splitMode,
           isReimbursement: expense.isReimbursement,
           documents: expense.documents,
+          notes: expense.notes,
         }
       : searchParams.get('reimbursement')
       ? {
@@ -109,6 +111,7 @@ export function ExpenseForm({
           isReimbursement: true,
           splitMode: 'EVENLY',
           documents: [],
+          notes: searchParams.get('notes') ?? '',
         }
       : {
           title: searchParams.get('title') ?? '',
@@ -137,6 +140,7 @@ export function ExpenseForm({
                 },
               ]
             : [],
+          notes: searchParams.get('notes') ?? '',
         },
   })
   const [isCategoryLoading, setCategoryLoading] = useState(false)
@@ -568,6 +572,31 @@ export function ExpenseForm({
             </CardContent>
           </Card>
         )}
+
+        <Card className="mt-4">
+          <CardHeader>
+            <CardTitle>Notes</CardTitle>
+            <CardDescription>Add notes for your expense.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <FormField
+              control={form.control}
+              name="notes"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Textarea
+                      className="text-base"
+                      placeholder="Add a note"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            ></FormField>
+          </CardContent>
+        </Card>
 
         <div className="flex mt-4 gap-2">
           <SubmitButton

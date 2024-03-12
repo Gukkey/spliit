@@ -107,6 +107,7 @@ export const expenseFormSchema = z
       )
       .default('EVENLY'),
     isReimbursement: z.boolean(),
+    notes: z.string().default(''),
     documents: z
       .array(
         z.object({

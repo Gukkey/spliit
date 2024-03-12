@@ -51,7 +51,8 @@ model Expense {
   isReimbursement Boolean           @default(false)
   splitMode       SplitMode         @default(EVENLY)
   createdAt       DateTime          @default(now())
-  documents       ExpenseDocument[]
+  notes           String            @default("")
+  documents       ExpenseDocument[] 
 }
 
 model ExpenseDocument {
